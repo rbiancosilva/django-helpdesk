@@ -6,6 +6,6 @@ urlpatterns = [
     path('', include('authentication.urls')),
     #path('knowledge_base/', include('knowledge_base.urls')),
     #path('notifications/', include('notifications.urls')),
-    #path('tickets/', include('tickets.urls')),
+    path('tickets/', include('tickets.urls')),
     path('admin/', admin.site.urls),
 ]

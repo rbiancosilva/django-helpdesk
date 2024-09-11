@@ -1,5 +1,5 @@
-from http.client import HTTPResponse, HTTPMessage
-
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
@@ -44,15 +44,19 @@ def register_view(request):
         return render(request, 'authentication/register.html')
 
 def login_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username', '').strip()
-        password = request.POST.get('password', '').strip()
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('index')
-        else:
-            messages.error(request, "Username or password is incorrect.")
-            return render(request, 'authentication/login.html')
+    if request.user.is_authenticated:
+        url = reverse('index_tickets')
+        return HttpResponseRedirect(url)
     else:
-        return render(request, 'authentication/login.html')
+        if request.method == 'POST':
+            username = request.POST.get('username', '').strip()
+            password = request.POST.get('password', '').strip()
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                messages.error(request, "Username or password is incorrect.")
+                return render(request, 'authentication/login.html')
+        else:
+            return render(request, 'authentication/login.html')
