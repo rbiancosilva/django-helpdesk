@@ -1,3 +1,5 @@
+from http.client import HTTPResponse, HTTPMessage
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
@@ -5,6 +7,7 @@ from django.contrib import messages
 
 def index(request):
     return render(request, "authentication/index.html")
+
 
 def register_view(request):
     if request.method == 'POST':
@@ -36,6 +39,20 @@ def register_view(request):
         # Authenticate and log the user in
         user = authenticate(username=username, password=password1)
         if user is not None:
+            return render(request, 'authentication/login.html')
+    else:# Redirect to home page after login
+        return render(request, 'authentication/register.html')
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '').strip()
+        user = authenticate(username=username, password=password)
+        if user is not None:
             login(request, user)
-            return redirect('home')  # Redirect to home page after login
-    return render(request, 'authentication/register.html')
+            return redirect('index')
+        else:
+            messages.error(request, "Username or password is incorrect.")
+            return render(request, 'authentication/login.html')
+    else:
+        return render(request, 'authentication/login.html')
