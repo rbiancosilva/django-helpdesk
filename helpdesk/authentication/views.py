@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import Profile
@@ -21,6 +21,7 @@ def register_view(request):
             email = request.POST.get('email', '').strip()
             password1 = request.POST.get('password1', '').strip()
             password2 = request.POST.get('password2', '').strip()
+            role = request.POST.get('role')
 
             # Check if all fields are filled in
             if not username or not email or not password1 or not password2:
@@ -43,6 +44,17 @@ def register_view(request):
 
             # Create a new user
             user = User.objects.create_user(username=username, email=email, password=password1)
+
+            if role == "client":
+                client_group = Group.objects.get(pk=1)
+                client_group.user_set.add(user)
+            elif role == "operator":
+                client_group = Group.objects.get(pk=2)
+                client_group.user_set.add(user)
+            else:
+                messages.error(request, "Choose a role.")
+                return render(request, 'authentication/register.html')
+
             profile = Profile.objects.create(user=user)
             user.save()
             profile.save()
