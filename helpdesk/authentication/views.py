@@ -48,9 +48,11 @@ def register_view(request):
             if role == "client":
                 client_group = Group.objects.get(pk=1)
                 client_group.user_set.add(user)
+                client_group.save()
             elif role == "operator":
                 client_group = Group.objects.get(pk=2)
                 client_group.user_set.add(user)
+                client_group.save()
             else:
                 messages.error(request, "Choose a role.")
                 return render(request, 'authentication/register.html')
@@ -70,21 +72,20 @@ def register_view(request):
 
 def login_view(request):
     if request.user.is_authenticated:
-        url = reverse('index_tickets')
-        return HttpResponseRedirect(url)
-    else:
-        if request.method == 'POST':
-            username = request.POST.get('username', '').strip()
-            password = request.POST.get('password', '').strip()
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect(reverse('index_tickets'))
-            else:
-                messages.error(request, "Username or password is incorrect.")
-                return render(request, 'authentication/login.html')
-        else:
-            return render(request, 'authentication/login.html')
+        return HttpResponseRedirect(reverse('index_tickets'))
+    
+    if request.method == 'POST':
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '').strip()
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect(reverse('index_tickets'))
+        
+        messages.error(request, "Username or password is incorrect.")
+        return render(request, 'authentication/login.html')
+    
+    return render(request, 'authentication/login.html')
     
 def logout_view(request):
     logout(request)
