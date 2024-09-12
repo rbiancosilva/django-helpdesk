@@ -22,7 +22,6 @@ def profile_tickets(request, user_id:int):
     return render(request, 'tickets/profile.html', {'profile':profile.user})
 
 @login_required(login_url='login')
-@permission_required('tickets.delete_tickets', raise_exception=True)
 def list_users_tickets(request):
     users = User.objects.all()
     return render(request, 'tickets/list_users.html', {'users':users})
