@@ -9,5 +9,8 @@
     {% for user in users %}
         <a href="{% url 'profile_tickets' user.id %}">{{user.username}}</a> <br>
     {% endfor %}  
+
+    <a href="{% url 'logout' %}">Logout</a> <br>
+    <a href="{% url 'my_profile_tickets' %}">My profile</a>
 </body>
 </html>
