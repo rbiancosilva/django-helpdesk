@@ -5,7 +5,9 @@
     <title>Tickets</title>
 </head>
 <body>
-    Tickets
-    <a href="{% url 'profile_tickets' 8 %}">Perfil 1</a>  
+    Tickets <br>
+    {% for user in users %}
+        <a href="{% url 'profile_tickets' user.id %}">{{user.username}}</a> <br>
+    {% endfor %}  
 </body>
 </html>

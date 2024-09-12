@@ -6,7 +6,8 @@ from authentication.models import Profile
 
 @login_required(login_url='login')
 def index_tickets(request):
-    return render(request, 'tickets/index.html')
+    users = User.objects.all()
+    return render(request, 'tickets/index.html', {'users':users})
 
 @login_required(login_url='login')
 def my_profile_tickets(request):
