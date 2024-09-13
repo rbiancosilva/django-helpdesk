@@ -1,0 +1,10 @@
+{% extends "base_authentication.html" %}
+
+{% block content %}
+    <h1>Reg</h1>
+    <form action="{% url 'index_authentication' %}">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="btn btn-success">Reg</button>
+    </form>
+{% endblock %}
