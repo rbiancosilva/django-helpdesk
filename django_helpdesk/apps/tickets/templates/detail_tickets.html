@@ -1,0 +1,16 @@
+{% extends "base_helpdesk.html" %}
+
+{% block title %}
+    <title>Ticket #{{ticket.id}}</title>
+{% endblock %}
+
+{% block content %}
+    <h5>{{ticket.title}}</h5>
+    <h5>{{ticket.content}}</h5>
+    <h5>{{ticket.user_name}}</h5>
+    <h5>{{ticket.created_at}}</h5>
+    {% if ticket.attachment %}
+        <p>Image URL: {{ ticket.attachment.name }}</p>
+        <img src="{{ ticket.attachment.url }}" alt="Attachment Image" style="max-width:100%; height:auto;">
+    {% endif %}
+{% endblock %}

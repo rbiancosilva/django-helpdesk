@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django_helpdesk.apps.tickets.models import Ticket, TicketForm
 from django.contrib import messages
 
@@ -38,6 +39,11 @@ def new_tickets(request):
 
 class TicketListView(ListView):
     model = Ticket
-    context_object_name = "users"
+    context_object_name = "tickets"
     template_name = "index_tickets.html"
+
+class TicketDetailView(DetailView):
+    model = Ticket
+    context_object_name = "ticket"
+    template_name = "detail_tickets.html"
 
