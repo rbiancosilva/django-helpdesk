@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django_helpdesk.apps.tickets.models import Ticket, TicketForm
+from django_helpdesk.apps.tickets.models import Ticket
 from django.contrib import messages
+from django import forms
+from django.contrib.auth.models import User
 
 
 def new_tickets(request):
@@ -47,3 +49,8 @@ class TicketDetailView(DetailView):
     context_object_name = "ticket"
     template_name = "detail_tickets.html"
 
+class TicketForm(forms.Form):
+    title = forms.CharField(max_length=60, required=True)
+    content = forms.CharField(widget=forms.Textarea())
+    attachment = forms.ImageField(required=False)
+    responsible = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='operator'))
