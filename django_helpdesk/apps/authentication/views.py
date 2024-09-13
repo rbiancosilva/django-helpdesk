@@ -46,11 +46,14 @@ def login_authentication(request):
             try:
                 user = login_check_form(email, password)
                 login(request, user)
-                return redirect('index_authentication')
+                return redirect(reverse('index_tickets'))
             except Exception as e:
                 messages.error(request, f"{e}")
                 return render(request, 'login_authentication.html', {'form': LoginForm()})
             
     return render(request, 'login_authentication.html', {'form': LoginForm()})
 
+def logout_authentication(request):
+    logout(request)
+    return redirect('index_authentication')
 

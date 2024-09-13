@@ -1,10 +1,11 @@
 from django.urls import path
 
-from . import views
+from .views import TicketListView
+ 
 
 urlpatterns = [
     
-    #path('', use list class (user tickets // use filter), name='index_tickets'), SIDE BAR (HOME) 
+    path('', TicketListView.as_view(), name='index_tickets'), #SIDE BAR (HOME) 
     #path('details', use details class, name='details_tickets'), ON CLICK  
     #path('new', use list class, name='new_tickets'), SIDE BAR
     #path('all', use list class (use filter), name='all_tickets') SIDEBAR

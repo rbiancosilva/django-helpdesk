@@ -8,7 +8,7 @@ urlpatterns = [
     path('', include('django_helpdesk.apps.authentication.urls')),
     #path('knowledge_base/', include('django_helpdesk.apps.knowledge_base.urls')),
     #path('notifications/', include('django_helpdesk.apps.notifications.urls')),
-    #path('tickets/', include('django_helpdesk.apps.tickets.urls')),
+    path('tickets/', include('django_helpdesk.apps.tickets.urls')),
     path('admin/', admin.site.urls),
 
 ]
