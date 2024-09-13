@@ -2,7 +2,14 @@
 
 {% block content %}
     <h1>Log</h1>
-    <form action="{% url 'index_authentication' %}">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form action="{% url 'login_authentication' %}" method="post">
         {% csrf_token %}
         {{ form }}
         <button type="submit" class="btn btn-success">Log</button>
