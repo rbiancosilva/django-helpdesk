@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    {% for user in users %}
-        <h3>{{user.user.username}}</h3>
+    {% for ticket in tickets %}
+        <h3>{{ticket.title}}</h3>
     {% endfor %}
 {% endblock %}

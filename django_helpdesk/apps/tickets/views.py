@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
-from django.contrib.auth.models import User
-from django_helpdesk.apps.user_profile.models import Profile 
+from django_helpdesk.apps.tickets.models import Ticket
 
 def index_tickets(request):
     return render(request, 'index_tickets.html')
 
 class TicketListView(ListView):
-    model = Profile
+    model = Ticket
     context_object_name = "users"
     template_name = "index_tickets.html"
