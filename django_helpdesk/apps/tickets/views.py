@@ -5,8 +5,11 @@ from django_helpdesk.apps.tickets.models import Ticket
 from django.contrib import messages
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-
+@login_required(login_url='login_authentication')
+@permission_required('tickets.add_ticket', raise_exception=True)
 def new_tickets(request):
     if request.method == 'POST':
         
@@ -37,17 +40,17 @@ def new_tickets(request):
     return render(request, 'new_tickets.html', {'form': TicketForm()})
 
 
-
-
-class TicketListView(ListView):
+class TicketListView(LoginRequiredMixin, ListView):
     model = Ticket
     context_object_name = "tickets"
     template_name = "index_tickets.html"
 
-class TicketDetailView(DetailView):
+
+class TicketDetailView(LoginRequiredMixin, DetailView):
     model = Ticket
     context_object_name = "ticket"
     template_name = "detail_tickets.html"
+
 
 class TicketForm(forms.Form):
     title = forms.CharField(max_length=60, required=True)

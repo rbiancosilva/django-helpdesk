@@ -4,12 +4,20 @@ from .models import LoginForm, RegisterForm
 from .utils import register_check_form, login_check_form 
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
-
+@login_required(login_url='login_authentication')
 def index_authentication(request):
+    if request.user.is_authenticated:
+        redirect(reverse('index_tickets'))
+
     return render(request, 'index_authentication.html')
-    
+
+@login_required(login_url='login_authentication')
 def register_authentication(request):
+    if request.user.is_authenticated:
+        redirect(reverse('index_tickets'))
+
     if request.method == 'POST':
         
         form = RegisterForm(request.POST)
@@ -34,7 +42,11 @@ def register_authentication(request):
 
     return render(request, 'register_authentication.html', {'form': RegisterForm()})
 
+@login_required(login_url='login_authentication')
 def login_authentication(request):
+    if request.user.is_authenticated:
+        redirect(reverse('index_tickets'))
+
     if request.method == 'POST':
 
         form = LoginForm(request.POST)

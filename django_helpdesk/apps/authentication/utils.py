@@ -17,16 +17,19 @@ def register_check_form(username: str, email: str, role: str, password1: str, pa
     new_user = User.objects.create_user(username=username, email=email, password=password1)
     new_user_profile = Profile.objects.create(user=new_user)
 
-    new_user.save()
-    new_user_profile.save()
+    
 
     if role == "USR":
         group = Group.objects.get(name='user')
         group.user_set.add(new_user)
+        new_user_profile.role = 'user'
     else:
         group = Group.objects.get(name='operator')
         group.user_set.add(new_user)
+        new_user_profile.role = 'operator'
 
+    new_user.save()
+    new_user_profile.save()
     group.save()
 
     return True
