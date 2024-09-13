@@ -1,5 +1,6 @@
-from django.contrib.auth.models import User 
-from django.db import models 
+from django.contrib.auth.models import User, Group 
+from django.db import models
+from django import forms
 
 class Ticket(models.Model):
 
@@ -18,5 +19,10 @@ class Ticket(models.Model):
         ]
 
     def __str__(self):
-        return self.user.username
-    
+        return self.title
+
+class TicketForm(forms.Form):
+    title = forms.CharField(max_length=60, required=True)
+    content = forms.CharField(widget=forms.Textarea())
+    attachment = forms.ImageField(required=False)
+    responsible = forms.ModelChoiceField(queryset=User.objects.all())

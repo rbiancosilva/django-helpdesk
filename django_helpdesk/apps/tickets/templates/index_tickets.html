@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+    <a href="{% url 'new_tickets' %}">Create ticket</a>
     {% for ticket in tickets %}
         <h3>{{ticket.title}}</h3>
     {% endfor %}
