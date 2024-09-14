@@ -14,7 +14,7 @@
     {% endif %}
     <form action="{% url 'login_authentication' %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_p }}
         <button type="submit" class="btn btn-success">Log</button>
     </form>
     

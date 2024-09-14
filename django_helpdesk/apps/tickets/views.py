@@ -7,9 +7,10 @@ from django.contrib import messages
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .models import Ticket
 from django.urls import reverse_lazy
+
 
 @login_required(login_url='login_authentication')
 @permission_required('tickets.add_ticket', raise_exception=True)
@@ -61,15 +62,17 @@ class TicketForm(forms.Form):
     responsible = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='operator'))
 
 
-
-class TicketUpdateView(UpdateView):
+class TicketUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Ticket
 
     fields = [
         "responsible",
         "status"
     ]
-    template_name = 'change_tickets.html'
     
+    permission_required = 'change_ticket' 
+    template_name = 'change_tickets.html'
+
+
     def get_success_url(self):
         return reverse_lazy('detail_tickets', kwargs={'pk': self.object.pk})
