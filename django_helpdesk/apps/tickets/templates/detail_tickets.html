@@ -9,8 +9,10 @@
     <h5>{{ticket.content}}</h5>
     <h5>{{ticket.user_name}}</h5>
     <h5>{{ticket.created_at}}</h5>
+    <h5>{{ticket.status}}</h5>
     {% if ticket.attachment %}
         <p>Image URL: {{ ticket.attachment.name }}</p>
         <img src="{{ ticket.attachment.url }}" alt="Attachment Image" style="max-width:100%; height:auto;">
     {% endif %}
+    <a href="{% url 'change_tickets' ticket.id %}">Change</a>
 {% endblock %}
