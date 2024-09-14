@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -48,11 +49,22 @@ class TicketListView(LoginRequiredMixin, ListView):
     context_object_name = "tickets"
     template_name = "index_tickets.html"
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.profile.role == "user":    
+            queryset = Ticket.objects.filter(created_by=user)
+            return queryset
+        
+        queryset = Ticket.objects.filter(responsible=user)
+        return queryset
+
 
 class TicketDetailView(LoginRequiredMixin, DetailView):
     model = Ticket
     context_object_name = "ticket"
     template_name = "detail_tickets.html"
+
+    
 
 
 class TicketForm(forms.Form):
@@ -70,9 +82,16 @@ class TicketUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         "status"
     ]
     
-    permission_required = 'change_ticket' 
+    #choosing permissions
+    permission_required = 'tickets.change_ticket' 
     template_name = 'change_tickets.html'
 
+    #used to get the same queryset as in the form used to create the model
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['responsible'].queryset = User.objects.filter(groups__name='operator')
+        return form
 
+    #used in order to redirect to a view with the pk as argument
     def get_success_url(self):
         return reverse_lazy('detail_tickets', kwargs={'pk': self.object.pk})

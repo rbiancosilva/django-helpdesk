@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block content %}
-    <a href="{% url 'new_tickets' %}">Create ticket</a>
     {% for ticket in tickets %}
         <a href="{% url 'detail_tickets' ticket.id %}">{{ticket.title}}</a>
         <h5>{{tickt.content}}</h5>
