@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .models import Ticket
 from django.urls import reverse_lazy
+from django.core.exceptions import PermissionDenied
 
 
 @login_required(login_url='login_authentication')
@@ -85,6 +86,11 @@ class TicketUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     #choosing permissions
     permission_required = 'tickets.change_ticket' 
     template_name = 'change_tickets.html'
+    def get_object(self, queryset=None):
+        ticket = super().get_object(queryset)
+        if ticket.responsible != self.request.user:
+            raise PermissionDenied
+        return ticket
 
     #used to get the same queryset as in the form used to create the model
     def get_form(self, form_class=None):
