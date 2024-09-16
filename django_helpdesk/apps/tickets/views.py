@@ -1,4 +1,5 @@
 from django.db.models.query import QuerySet
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -42,6 +43,12 @@ def new_tickets(request):
                                                status="new")
             
             new_ticket.save()
+
+            new_notification = Notification.objects.create(title="New ticket raised - you're the responsible",
+                                                           content=f'/tickets/details/{new_ticket.id}/',
+                                                           sent_to=new_ticket.responsible)
+            
+            new_notification.save()
 
             return redirect('index_tickets')
         
@@ -122,4 +129,11 @@ class TicketUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     #used in order to redirect to a view with the pk as argument
     def get_success_url(self):
+        new_notification = Notification.objects.create(title="Ticket assigned to you",
+                                    content=f'/tickets/details/{self.object.id}/',
+                                    sent_to=self.object.responsible)
+        
+        new_notification.save()
+        
         return reverse_lazy('detail_tickets', kwargs={'pk': self.object.pk})
+    

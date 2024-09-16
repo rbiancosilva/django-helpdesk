@@ -2,6 +2,7 @@ from django import forms
 from .models import Comment
 from django.shortcuts import redirect
 from django_helpdesk.apps.tickets.models import Ticket
+from django_helpdesk.apps.notifications.models import Notification 
 from django.contrib.auth.decorators import login_required
 
 class CommentForm(forms.Form):
@@ -24,6 +25,16 @@ def new_comments(request, ticket_id):
                                                  user_name=str(user.username))
             
             new_comment.save()
+
+            if user.profile.role == "operator":
+                notify_user = ticket.created_by
+            else:
+                notify_user = ticket.responsible
+
+            new_notification = Notification.objects.create(title="New comment on ticket",
+                                                           content=f'/tickets/details/{ticket_id}/',
+                                                           sent_to=notify_user)
+
             return redirect(f'/tickets/details/{ticket_id}/')
 
     return redirect(f'/tickets/details/{ticket_id}/')

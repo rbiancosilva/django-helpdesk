@@ -1,0 +1,13 @@
+{% extends "base_helpdesk.html" %}
+
+{% block title %}
+    <title>Notifications</title>
+{% endblock %}
+
+{% block content %}
+    <br>
+    {% for notification in notifications %}
+        <a href="{{notification.content}}">{{notification.title}}</a>
+    {% endfor %}
+
+{% endblock %}
