@@ -17,4 +17,17 @@
     {% if ticket.responsible == user %}
         <a href="{% url 'change_tickets' ticket.id %}">Change</a>
     {% endif %}
+    <h2>Comment</h2>
+    <form method="post" action="{% url 'new_comments' ticket.id %}">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-success">Send</button>
+    </form>
+    {% for comment in ticket.comment_set.all %}
+        
+        <h3>{{comment.user.username}}</h3>
+        <h5>{{comment.content}}</h5>
+
+    {% endfor %}
+    
 {% endblock %}

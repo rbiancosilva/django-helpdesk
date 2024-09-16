@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django_helpdesk.apps.tickets.models import Ticket
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, FormMixin
 from django.contrib import messages
 from django import forms
 from django.contrib.auth.models import User
@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from .models import Ticket
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
+from django_helpdesk.apps.comments.views import CommentForm
 
 
 @login_required(login_url='login_authentication')
@@ -69,10 +70,11 @@ class AllTicketListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 
 
-class TicketDetailView(LoginRequiredMixin, DetailView):
+class TicketDetailView(LoginRequiredMixin, DetailView, FormMixin):
     model = Ticket
     context_object_name = "ticket"
     template_name = "detail_tickets.html"
+    form_class = CommentForm
 
     def get_object(self, queryset=None):
         ticket = super().get_object(queryset)

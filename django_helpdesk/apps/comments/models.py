@@ -11,6 +11,6 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return [self.ticket.title, self.user_name]
+        return self.ticket.title
     
     
