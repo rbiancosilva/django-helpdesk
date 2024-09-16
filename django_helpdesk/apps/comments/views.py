@@ -1,6 +1,6 @@
 from django import forms
 from .models import Comment
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django_helpdesk.apps.tickets.models import Ticket
 from django.contrib.auth.decorators import login_required
 

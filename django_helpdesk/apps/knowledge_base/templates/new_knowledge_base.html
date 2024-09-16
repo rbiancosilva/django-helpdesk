@@ -1,0 +1,21 @@
+{% extends "base_helpdesk.html" %}
+
+{% block title %}
+    <title>New article</title>
+{% endblock %}
+
+{% block content %}
+    <h1>New article</h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form action="{% url 'new_knowledge_base' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Post</button>
+    </form>
+{% endblock %}

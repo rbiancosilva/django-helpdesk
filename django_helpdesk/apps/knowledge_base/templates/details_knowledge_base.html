@@ -1,0 +1,18 @@
+{% extends "base_helpdesk.html" %}
+
+{% block title %}
+    <title>article #{{article.id}}</title>
+{% endblock %}
+
+{% block content %}
+    <h5>{{article.title}}</h5>
+    <h5>{{article.content}}</h5>
+    <h5>{{article.user_name}}</h5>
+    <h5>{{article.created_at}}</h5>
+    {% if article.file_attachment %}
+        <a href="{{ article.file_attachment.url }}" download="File attachment">Download File Attachment</a>
+    {% endif %}
+    {% if article.image_attachment %}
+        <img src="{{ article.image_attachment.url }}" alt="Image File" style="max-width:100%; height:auto;">
+    {% endif %}
+{% endblock %}

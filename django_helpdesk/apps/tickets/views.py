@@ -13,6 +13,7 @@ from .models import Ticket
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
 from django_helpdesk.apps.comments.views import CommentForm
+from django_helpdesk.apps.notifications.models import Notification
 
 
 @login_required(login_url='login_authentication')
@@ -41,6 +42,7 @@ def new_tickets(request):
                                                status="new")
             
             new_ticket.save()
+
             return redirect('index_tickets')
         
         messages.error(request, "Invalid form. Try again")

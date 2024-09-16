@@ -1,0 +1,13 @@
+{% extends "base_helpdesk.html" %}
+
+{% block title %}
+    <title>Articles</title>
+{% endblock %}
+
+{% block content %}
+    <br>
+    {% for article in articles %}
+        <a href="{% url 'details_knowledge_base' article.id %}">{{article.title}}</a>
+        <h5>{{article.content}}</h5>
+    {% endfor %}
+{% endblock %}
