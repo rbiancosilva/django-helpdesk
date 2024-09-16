@@ -8,13 +8,13 @@ from django.contrib.auth.decorators import login_required
 
 def index_authentication(request):
     if request.user.is_authenticated:
-        redirect(reverse('index_tickets'))
+        return redirect(reverse('index_tickets'))
 
     return render(request, 'index_authentication.html')
 
 def register_authentication(request):
     if request.user.is_authenticated:
-        redirect(reverse('index_tickets'))
+        return redirect(reverse('index_tickets'))
 
     if request.method == 'POST':
         
@@ -42,7 +42,7 @@ def register_authentication(request):
 
 def login_authentication(request):
     if request.user.is_authenticated:
-        redirect(reverse('index_tickets'))
+        return redirect(reverse('index_tickets'))
 
     if request.method == 'POST':
 

@@ -24,10 +24,12 @@ def new_tickets(request):
         if form.is_valid():
             title = form.cleaned_data['title']
             content = form.cleaned_data['content']
-            attachment = form.files['attachment'] 
             responsible = form.cleaned_data['responsible']
-
             user = request.user
+            if 'attachment' in form.files:
+                attachment = form.files['attachment']
+            else:
+                attachment = None 
 
             new_ticket = Ticket.objects.create(title=title, 
                                                content=content, 
@@ -64,6 +66,15 @@ class TicketDetailView(LoginRequiredMixin, DetailView):
     model = Ticket
     context_object_name = "ticket"
     template_name = "detail_tickets.html"
+
+    def get_object(self, queryset=None):
+        ticket = super().get_object(queryset)
+        user = self.request.user
+        if user.profile.role == "user":
+            if ticket.created_by != user:
+                raise PermissionDenied
+            return ticket
+        return ticket
 
     
 
