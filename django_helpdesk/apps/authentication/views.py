@@ -3,8 +3,7 @@ from django.urls import reverse
 from .models import LoginForm, RegisterForm
 from .utils import register_check_form, login_check_form 
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, logout
 
 def index_authentication(request):
     if request.user.is_authenticated:

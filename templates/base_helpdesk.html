@@ -17,6 +17,9 @@
     {% if user.profile.role == "user" %}
         <a href="{% url 'new_tickets' %}">New ticket</a>
     {% endif %}
+    {% if user.profile.role == "operator" %}
+        <a href="{% url 'all_tickets' %}">All tickets</a>
+    {% endif %}
         <a href="{% url 'logout_authentication' %}">Logout</a>
         <a href="{% url 'index_tickets' %}">Home</a>
     {% block content %}

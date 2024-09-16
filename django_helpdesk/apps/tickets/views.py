@@ -60,6 +60,13 @@ class TicketListView(LoginRequiredMixin, ListView):
         
         queryset = Ticket.objects.filter(responsible=user)
         return queryset
+    
+class AllTicketListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    model = Ticket
+    context_object_name = "tickets"
+    template_name = "index_tickets.html"
+    permission_required = 'tickets.change_ticket'
+
 
 
 class TicketDetailView(LoginRequiredMixin, DetailView):
