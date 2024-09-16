@@ -22,6 +22,8 @@
     {% endif %}
         <a href="{% url 'logout_authentication' %}">Logout</a>
         <a href="{% url 'index_tickets' %}">Home</a>
+        <a href="{% url 'details_user_profile' user.id %}">Profile</a>
+        <a href="{% url 'all_user_profile' %}">All profiles</a>
     {% block content %}
     {% endblock %}
 </body>

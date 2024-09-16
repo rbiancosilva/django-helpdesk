@@ -1,0 +1,12 @@
+{% extends "base_helpdesk.html" %}
+
+{% block title %}
+    <title>Profiles</title>
+{% endblock %}
+
+{% block content %}
+    <br>
+    {% for profile in profiles %}
+        <a href="{% url 'details_user_profile' profile.id %}">{{profile.user.username}}</a>
+    {% endfor %}
+{% endblock %}

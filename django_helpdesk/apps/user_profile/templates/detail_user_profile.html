@@ -1,0 +1,15 @@
+{% extends "base_helpdesk.html" %}
+
+{% block title %}
+    <title>Profile {{profile.username}}</title>
+{% endblock %}
+
+{% block content %}
+    
+    {% if profile.profile_picture %}
+        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" style="height:100px; width: auto;">
+    {% endif %}
+    {% if profile.user == user %}
+        <a href="{% url 'change_user_profile' profile.id %}">Change</a>
+    {% endif %}
+{% endblock %}

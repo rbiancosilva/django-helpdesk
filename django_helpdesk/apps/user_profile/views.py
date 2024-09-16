@@ -1,20 +1,28 @@
 from django.shortcuts import render
 from .models import Profile
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView
+from django.contrib.auth.models import User 
+from django.core.exceptions import PermissionDenied
+from django.urls import reverse_lazy
 
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = Profile
-    context_object_name = "user"
+    context_object_name = "profile"
     template_name = "detail_user_profile.html"
 
 class ProfileListView(LoginRequiredMixin, ListView):
     model = Profile
-    context_object_name = "users"
-    template_name = "list_user_profile.html"
+    context_object_name = "profiles"
+    template_name = 'all_user_profile.html'
 
 class ProfileUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Profile
 
     fields = [
+        "bio",
         "company",
         "job",
         "country",
@@ -22,4 +30,15 @@ class ProfileUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
         "profile_picture"
     ]
     
-    template_name = 'change_profile.html'
+    template_name = 'change_user_profile.html'
+    permission_required = 'user_profile.change_profile'
+
+    def get_object(self, queryset=None):
+        profile = super().get_object(queryset)
+        profile_user = User.objects.get(pk=profile.user.id)
+        if profile_user != self.request.user:
+            raise PermissionDenied
+        return profile
+    
+    def get_success_url(self):
+        return reverse_lazy('details_user_profile', kwargs={'pk': self.object.pk})
