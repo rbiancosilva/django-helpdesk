@@ -5,11 +5,59 @@
 {% endblock %}
 
 {% block content %}
-    
-    {% if profile.profile_picture %}
-        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" style="height:100px; width: auto;">
-    {% endif %}
-    {% if profile.user == user %}
-        <a href="{% url 'change_user_profile' profile.id %}">Change</a>
-    {% endif %}
+    <div class="container mt-4">
+        <h2 class="mb-4 text-center">{{ profile.user.username }}'s Profile</h2>
+
+        <div class="row">
+            <div class="col-md-4 d-flex justify-content-center">
+                <div class="card text-center shadow-sm">
+                    {% if profile.profile_picture %}
+                        <img src="{{ profile.profile_picture.url }}" class="card-img-top" alt="{{ profile.user.username }}'s profile picture" style="width: 189px; height: 189px; object-fit: cover;">
+                    {% else %}
+                        <img src="https://www.svgrepo.com/show/452030/avatar-default.svg" class="card-img-top" alt="{{ profile.user.username }}'s profile picture">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ profile.user.username }}</h5>
+                        <p class="card-text text-muted">{{ profile.user.bio }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <h4 class="mb-3">Details</h4>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Email:</strong> {{ profile.user.email }}</li>
+                    <li class="list-group-item"><strong>Role:</strong> {{ profile.role }}</li>
+                    <li class="list-group-item"><strong>Company:</strong> {{ profile.company }}</li>
+                    <li class="list-group-item"><strong>Job:</strong> {{ profile.job }}</li>
+                    <li class="list-group-item"><strong>Country:</strong> {{ profile.country }}</li>
+                    <li class="list-group-item"><strong>College:</strong> {{ profile.college }}</li>
+                </ul>
+            </div>
+        </div>
+
+        {% if profile == user.profile %}
+            <div class="text-center mt-4">
+                <div class="card">
+                    <div class="card-body">
+                        <a href="{% url 'change_user_profile' profile.id %}" class="btn btn-primary btn-block">Edit Profile</a> <!-- Link to edit profile -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <style>
+        .card {
+            transition: transform 0.2s; /* Animation on hover */
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* Slight zoom effect */
+        }
+
+        .list-group-item {
+            font-size: 1.1rem; /* Increase font size for list items */
+        }
+    </style>
 {% endblock %}

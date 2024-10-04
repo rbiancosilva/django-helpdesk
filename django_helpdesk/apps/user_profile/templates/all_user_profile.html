@@ -5,8 +5,39 @@
 {% endblock %}
 
 {% block content %}
-    <br>
-    {% for profile in profiles %}
-        <a href="{% url 'details_user_profile' profile.id %}">{{profile.user.username}}</a>
-    {% endfor %}
+    <div class="container mt-4">
+        <h2 class="mb-4">User Profiles</h2>
+        {% if profiles %}
+            <div class="row">
+                {% for profile in profiles %}
+                    <div class="col-md-3 mb-4">
+                        <div class="card">
+                            {% if profile.profile_picture %}
+                                <a href="{% url 'details_user_profile' profile.id %}">
+                                    <img src="{{ profile.profile_picture.url }}" class="card-img-top" alt="{{ profile.user.username }}'s profile picture"> <!-- Adjust according to your model -->
+                                </a>
+                            {% else %}
+                                <a href="{% url 'details_user_profile' profile.id %}">
+                                    <img src="https://www.svgrepo.com/show/452030/avatar-default.svg" class="card-img-top" alt="{{ profile.user.username }}'s profile picture">
+                                </a>
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ profile.user.username }}</h5> <!-- Username -->
+                                <p class="card-text">{{ profile.user.email }}</p> <!-- Email -->
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No users found.</p>
+        {% endif %}
+    </div>
+    <style>
+        img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
 {% endblock %}
