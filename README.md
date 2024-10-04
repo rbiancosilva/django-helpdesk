@@ -4,7 +4,7 @@
 
 This is a Help Desk system built with Django. It includes the core backend functionalities required for managing tickets, users, comments, notifications, and a knowledge base. The application is designed to streamline support processes, offering solutions for handling user requests, tracking issues, and managing help resources.
 
-**Important:** The frontend of the application has not been developed yet, so there is no clean user interface. The backend is fully functional, and API endpoints can be accessed for testing and integration purposes.
+**Important:** The frontend of the application has not been developed yet, so there is no clean user interface. The backend is functional.
 
 ## Features
 
