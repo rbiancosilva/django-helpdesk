@@ -5,9 +5,28 @@
 {% endblock %}
 
 {% block content %}
-    <br>
-    {% for ticket in tickets %}
-        <a href="{% url 'detail_tickets' ticket.id %}">{{ticket.title}}</a>
-        <h5>{{tickt.content}}</h5>
-    {% endfor %}
+    <div class="container mt-4">
+        {% if user.profile.role == 'operator'%}
+            <h2 class="mb-4">Tickets Assigned to You</h2>
+        {% endif %}
+        {% if user.profile.role == 'user' %}
+            <h2 class="mb-4">Tickets Opened by You</h2>
+        {% endif %}
+        {% if tickets %}
+            <ul class="list-group">
+                {% for ticket in tickets %}
+                    <li class="list-group-item">
+                        <h5>{{ ticket.title }}</h5>
+                        <p>{{ ticket.content }}</p>
+                        <small>Assigned on: {{ ticket.created_at }} | Status: {{ ticket.status }}</small>
+                        <br>
+                        <a style="margin-top: 5px" href="{% url 'detail_tickets' ticket.id %}" class="btn btn-success btn-sm">View Details</a> <!-- Link to the ticket detail page -->
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No tickets assigned to you at the moment.</p>
+        {% endif %}
+    </div>
 {% endblock %}
+
