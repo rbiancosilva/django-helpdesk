@@ -1,18 +1,50 @@
 {% extends "base_helpdesk.html" %}
 
 {% block title %}
-    <title>article #{{article.id}}</title>
+    <title>Article #{{article.id}}</title>
 {% endblock %}
 
 {% block content %}
-    <h5>{{article.title}}</h5>
-    <h5>{{article.content}}</h5>
-    <h5>{{article.user_name}}</h5>
-    <h5>{{article.created_at}}</h5>
-    {% if article.file_attachment %}
-        <a href="{{ article.file_attachment.url }}" download="File attachment">Download File Attachment</a>
-    {% endif %}
-    {% if article.image_attachment %}
-        <img src="{{ article.image_attachment.url }}" alt="Image File" style="max-width:100%; height:auto;">
-    {% endif %}
+    <div class="container mt-5">
+        <h1 class="mb-4">{{ article.title }}</h1>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ article.title }}</h5>
+                {% if article.image_attachment %}
+                    <div class="mb-4">
+                        <div class="image-container">
+                            <img src="{{ article.image_attachment.url }}" alt="Image File" class="img-fluid">
+                        </div>
+                    </div>
+                {% endif %}
+                <p class="card-text">{{ article.content }}</p>
+                <p class="card-text"><strong>Author:</strong> {{ article.user_name }}</p>
+                <p class="card-text"><strong>Published on:</strong> {{ article.created_at|date:"F j, Y" }}</p>
+            </div>
+        </div>
+
+        {% if article.file_attachment %}
+            <div class="mb-3">
+                <a href="{{ article.file_attachment.url }}" class="btn btn-secondary" download="File attachment">
+                    <i class="fas fa-file-download"></i> Download File Attachment
+                </a>
+            </div>
+        {% endif %}
+
+        <div>
+            <a href="{% url 'index_knowledge_base' %}" class="btn btn-primary">Back to Articles</a>  <!-- Adjust the URL as necessary -->
+        </div>
+    </div>
+
+    <style>
+        .image-container {
+            max-width: 800px;  /* Set your desired max width */
+            margin: 0 auto;    /* Center the image container */
+        }
+        .image-container img {
+            width: 100%;       /* Make the image responsive */
+            height: auto;      /* Maintain aspect ratio */
+        }
+    </style>
 {% endblock %}

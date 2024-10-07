@@ -1,13 +1,30 @@
 {% extends "base_helpdesk.html" %}
 
 {% block title %}
-    <title>Articles</title>
+    <title>Knowledge Base Articles</title>
 {% endblock %}
 
 {% block content %}
-    <br>
-    {% for article in articles %}
-        <a href="{% url 'details_knowledge_base' article.id %}">{{article.title}}</a>
-        <h5>{{article.content}}</h5>
-    {% endfor %}
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Knowledge Base Articles</h1>
+            <a href="{% url 'new_knowledge_base' %}" class="btn btn-primary">Add New Article</a>  <!-- Adjust URL name as needed -->
+        </div>
+
+        {% if articles %}
+            <div class="list-group">
+                {% for article in articles %}
+                    <a href="{% url 'details_knowledge_base' article.id %}" class="list-group-item list-group-item-action">
+                        <h5 class="mb-1">{{ article.title }}</h5>
+                        <p class="mb-1">{{ article.content|truncatewords:20 }}</p>  <!-- Shorten content to avoid overflow -->
+                        <small>Published on: {{ article.created_at|date:"F j, Y" }}</small>  <!-- Display publication date -->
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info mt-3">
+                No articles found in the knowledge base.
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

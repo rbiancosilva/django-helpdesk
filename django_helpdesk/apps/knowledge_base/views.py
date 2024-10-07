@@ -35,7 +35,7 @@ def new_article_knowledge_base(request):
                                                  user_name=str(request.user.username))
             
             new_article.save()
-            return redirect(f'/knowledge_base/details/{new_article.id}/')
+            return redirect(f'/knowledge_base/details/{new_article.id}')
         
         messages.error(request, "Invalid form")
         return render(request, "new_knowledge_base.html", {'form': ArticleForm()})
@@ -67,8 +67,8 @@ class ArticleDetailView(LoginRequiredMixin, DetailView):
     template_name = "details_knowledge_base.html"
 
 class ArticleForm(forms.Form):
-    title = forms.CharField(max_length=60, required=True)
-    content = forms.CharField(widget=forms.Textarea())
-    file_attachment = forms.FileField(required=False)
-    image_attachment = forms.ImageField(required=False)
+    title = forms.CharField(max_length=60, required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=True)
+    file_attachment = forms.FileField(required=False, widget=forms.FileInput(attrs={'class': "form-control"}))
+    image_attachment = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': "form-control"}))
 
