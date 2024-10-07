@@ -85,10 +85,6 @@ class TicketDetailView(LoginRequiredMixin, DetailView, FormMixin):
     template_name = "detail_tickets.html"
     form_class = CommentForm
 
-
-    def get_queryset(self):
-        return Ticket.objects.all().order_by('-created_at')
-
     def get_object(self, queryset=None):
         ticket = super().get_object(queryset)
         user = self.request.user
@@ -144,4 +140,5 @@ class TicketUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         new_notification.save()
         
         return reverse_lazy('detail_tickets', kwargs={'pk': self.object.pk})
+
     

@@ -5,28 +5,71 @@
 {% endblock %}
 
 {% block content %}
-    <h5>{{ticket.title}}</h5>
-    <h5>{{ticket.content}}</h5>
-    <h5>{{ticket.user_name}}</h5>
-    <h5>{{ticket.created_at}}</h5>
-    <h5>{{ticket.status}}</h5>
-    <h5>{{ticket.responsible.username}}</h5>
-    {% if ticket.attachment %}
-        <img src="{{ ticket.attachment.url }}" alt="Attachment Image" style="max-width:100%; height:auto;">
-    {% endif %}
-    {% if ticket.responsible == user %}
-        <a href="{% url 'change_tickets' ticket.id %}">Change</a>
-    {% endif %}
-    <h2>Comment</h2>
-    <form method="post" action="{% url 'new_comments' ticket.id %}">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" class="btn btn-success">Send</button>
-    </form>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h2>{{ ticket.title }}</h2>
+            </div>
+            <div class="card-body">
+                <p><strong>Content:</strong> {{ ticket.content }}</p>
+                <p><strong>Owner:</strong> <a href="{% url 'details_user_profile' ticket.created_by.profile.id %}">{{ ticket.user_name }}</a></p>
+                <p><strong>Created at:</strong> {{ ticket.created_at|date:"F d, Y H:i" }}</p>
+                <p><strong>Status:</strong> {{ ticket.status }}</p>
+                <p><strong>Responsible:</strong> <a href="{% url 'details_user_profile' ticket.responsible.profile.id %}">{{ ticket.responsible.username }}</a></p>
 
-    {% for comment in ticket.comment_set.all|dictsortreversed:"created_at" %}
-        <h3>{{ comment.user.username }}</h3>
-        <h5>{{ comment.content }}</h5>
-    {% endfor %}
+                {% if ticket.attachment %}
+                    <div class="mt-3">
+                        <a href="{{ ticket.attachment.url }}" class="btn btn-primary" download="Ticket attachment">
+                            <i class="fas fa-download"></i> Download Attachment
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if ticket.responsible == user %}
+                    <div class="mt-3">
+                        <a href="{% url 'change_tickets' ticket.id %}" class="btn btn-success">
+                            <i class="fas fa-edit"></i> Change Ticket
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h3>Leave a Comment</h3>
+            <form method="post" action="{% url 'new_comments' ticket.id %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-paper-plane"></i> Send
+                </button>
+            </form>
+        </div>
+
+        <div class="mt-5">
+            <h3>Comments</h3>
+            <div class="list-group">
+                {% for comment in ticket.comment_set.all|dictsortreversed:"created_at" %}
+                    <div class="list-group-item">
+                        <h5 class="mb-1">{{ comment.user.username }}</h5>
+                        <p class="mb-1">{{ comment.content }}</p>
+                        <small>{{ comment.created_at|date:"F d, Y H:i" }}</small>
+                    </div>
+                {% empty %}
+                    <p class="text-muted">No comments yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Inline styles for the textarea -->
+    <style>
+        .form-textarea {
+            height: 200px; /* Set the desired height */
+            resize: none;  /* Disable resizing */
+        }
+    </style>
     
 {% endblock %}

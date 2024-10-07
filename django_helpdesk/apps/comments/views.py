@@ -6,7 +6,7 @@ from django_helpdesk.apps.notifications.models import Notification
 from django.contrib.auth.decorators import login_required
 
 class CommentForm(forms.Form):
-    content = forms.CharField(widget=forms.Textarea())
+    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control form-textarea'}))
 
 @login_required(login_url='login_authentication')
 def new_comments(request, ticket_id):
