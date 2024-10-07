@@ -42,3 +42,13 @@ class ProfileUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     
     def get_success_url(self):
         return reverse_lazy('details_user_profile', kwargs={'pk': self.object.pk})
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['bio'].widget.attrs.update({'class': 'form-control form-textarea'})
+        form.fields['company'].widget.attrs.update({'class': 'form-control form-textarea-sm'})
+        form.fields['job'].widget.attrs.update({'class': 'form-control form-textarea-sm'})
+        form.fields['country'].widget.attrs.update({'class': 'form-control form-textarea-sm'})
+        form.fields['college'].widget.attrs.update({'class': 'form-control form-textarea-sm'})
+        form.fields['profile_picture'].widget.attrs.update({'class': 'form-control'})
+        return form
