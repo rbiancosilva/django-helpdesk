@@ -6,6 +6,9 @@
 
 {% block content %}
     <div class="container mt-4">
+        {% if title %}
+            <h2 class="mb-4">{{ title }}</h2>
+        {% endif %}
         {% if user.profile.role == 'operator'%}
             <h2 class="mb-4">Tickets Assigned to You</h2>
         {% endif %}

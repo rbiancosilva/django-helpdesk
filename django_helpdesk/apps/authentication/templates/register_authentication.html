@@ -4,17 +4,34 @@
     <title>Register</title>
 {% endblock %}
 {% block content %}
-    <h1>Reg</h1>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <form action="{% url 'register_authentication' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Reg</button>
-    </form>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center mb-4">Register</h1>
+                {% if messages %}
+                    <div class="alert alert-info">
+                        <ul class="messages list-unstyled">
+                            {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{% url 'register_authentication' %}" method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success">Register</button>
+                            </div>
+                        </form>
+                        <div class="text-center mt-3">
+                            <a href="{% url 'login_authentication' %}">Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

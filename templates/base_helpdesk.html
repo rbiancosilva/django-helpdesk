@@ -49,22 +49,19 @@
             <nav>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index_notifications' %}"><i class="bi bi-bell"></i> Notifications</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index_knowledge_base' %}"><i class="bi bi-book"></i> Knowledge Base</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'all_user_profile' %}"><i class="bi bi-people"></i> People</a>
+                        <a class="nav-link" href="{% url 'index_tickets' %}"><i class="bi bi-house"></i> Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'details_user_profile' user.id %}"><i class="bi bi-person"></i> Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index_tickets' %}"><i class="bi bi-house"></i> Home</a>
+                        <a class="nav-link" href="{% url 'all_user_profile' %}"><i class="bi bi-people"></i> People</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout_authentication' %}"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                        <a class="nav-link" href="{% url 'index_knowledge_base' %}"><i class="bi bi-book"></i> Knowledge Base</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index_notifications' %}"><i class="bi bi-bell"></i> Notifications</a>
                     </li>
                     {% if user.profile.role == "user" %}
                     <li class="nav-item">
@@ -76,6 +73,9 @@
                         <a class="nav-link" href="{% url 'all_tickets' %}"><i class="bi bi-list-check"></i> All Tickets</a>
                     </li>
                     {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout_authentication' %}"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                    </li>
                 </ul>
             </nav>
         </div>

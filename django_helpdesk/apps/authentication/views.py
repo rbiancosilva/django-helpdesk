@@ -9,7 +9,7 @@ def index_authentication(request):
     if request.user.is_authenticated:
         return redirect(reverse('index_tickets'))
 
-    return render(request, 'index_authentication.html')
+    return render(request, 'login_authentication.html', {'form': LoginForm()})
 
 def register_authentication(request):
     if request.user.is_authenticated:

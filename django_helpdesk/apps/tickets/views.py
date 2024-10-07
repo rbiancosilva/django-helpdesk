@@ -77,6 +77,13 @@ class AllTicketListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = "index_tickets.html"
     permission_required = 'tickets.change_ticket'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['title'] = 'All tickets'
+
+        return context
+
 
 
 class TicketDetailView(LoginRequiredMixin, DetailView, FormMixin):
