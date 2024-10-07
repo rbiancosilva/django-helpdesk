@@ -23,11 +23,10 @@
         {{form.as_p}}
         <button type="submit" class="btn btn-success">Send</button>
     </form>
-    {% for comment in ticket.comment_set.all %}
-        
-        <h3>{{comment.user.username}}</h3>
-        <h5>{{comment.content}}</h5>
 
+    {% for comment in ticket.comment_set.all|dictsortreversed:"created_at" %}
+        <h3>{{ comment.user.username }}</h3>
+        <h5>{{ comment.content }}</h5>
     {% endfor %}
     
 {% endblock %}
