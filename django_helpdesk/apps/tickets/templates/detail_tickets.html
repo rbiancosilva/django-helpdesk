@@ -12,10 +12,10 @@
             </div>
             <div class="card-body">
                 <p><strong>Content:</strong> {{ ticket.content }}</p>
-                <p><strong>Owner:</strong> <a href="{% url 'details_user_profile' ticket.created_by.profile.id %}">{{ ticket.user_name }}</a></p>
+                <p><strong>Owner:</strong> <a href="{% url 'details_user_profile' ticket.created_by.profile.id %}" class="text-decoration-none text-primary">{{ ticket.user_name }}</a></p>
                 <p><strong>Created at:</strong> {{ ticket.created_at|date:"F d, Y H:i" }}</p>
                 <p><strong>Status:</strong> {{ ticket.status }}</p>
-                <p><strong>Responsible:</strong> <a href="{% url 'details_user_profile' ticket.responsible.profile.id %}">{{ ticket.responsible.username }}</a></p>
+                <p><strong>Responsible:</strong> <a href="{% url 'details_user_profile' ticket.responsible.profile.id %}" class="text-decoration-none text-primary">{{ ticket.responsible.username }}</a></p>
 
                 {% if ticket.attachment %}
                     <div class="mt-3">
@@ -53,7 +53,11 @@
             <div class="list-group">
                 {% for comment in ticket.comment_set.all|dictsortreversed:"created_at" %}
                     <div class="list-group-item">
-                        <h5 class="mb-1">{{ comment.user.username }}</h5>
+                        <h5 class="mb-1">
+                            <a href="{% url 'details_user_profile' comment.user.profile.id %}" style="color: black;" class="text-decoration-none">
+                                {{ comment.user.username }}
+                            </a>
+                        </h5>
                         <p class="mb-1">{{ comment.content }}</p>
                         <small>{{ comment.created_at|date:"F d, Y H:i" }}</small>
                     </div>
