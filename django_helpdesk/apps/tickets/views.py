@@ -98,10 +98,10 @@ class TicketDetailView(LoginRequiredMixin, DetailView, FormMixin):
 
 
 class TicketForm(forms.Form):
-    title = forms.CharField(max_length=60, required=True)
-    content = forms.CharField(widget=forms.Textarea())
-    attachment = forms.ImageField(required=False)
-    responsible = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='operator'))
+    title = forms.CharField(max_length=60, required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}))
+    content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control form-textarea', 'placeholder':'Content'}))
+    attachment = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'form-control', 'placeholder': 'Attachment'}))
+    responsible = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='operator'), widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Responsible'}))
 
 
 class TicketUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -111,6 +111,8 @@ class TicketUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         "responsible",
         "status"
     ]
+
+
     
     #choosing permissions
     permission_required = 'tickets.change_ticket' 
@@ -125,6 +127,8 @@ class TicketUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.fields['responsible'].queryset = User.objects.filter(groups__name='operator')
+        form.fields['responsible'].widget.attrs.update({'class': 'form-control'})
+        form.fields['status'].widget.attrs.update({'class': 'form-control'})
         return form
 
     #used in order to redirect to a view with the pk as argument
