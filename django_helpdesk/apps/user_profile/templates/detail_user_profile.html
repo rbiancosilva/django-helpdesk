@@ -12,7 +12,7 @@
             <div class="col-md-4 d-flex justify-content-center">
                 <div class="card text-center shadow-sm">
                     {% if profile.profile_picture %}
-                        <img src="{{ profile.profile_picture.url }}" class="card-img-top" alt="{{ profile.user.username }}'s profile picture" style="width: 189px; height: 189px; object-fit: cover;">
+                        <img src="{{ profile.profile_picture.url }}" class="card-img-top" alt="{{ profile.user.username }}'s profile picture" style="width: 200px; height: 200px; object-fit: cover;">
                     {% else %}
                         <img src="https://www.svgrepo.com/show/452030/avatar-default.svg" class="card-img-top" alt="{{ profile.user.username }}'s profile picture">
                     {% endif %}

@@ -9,13 +9,17 @@
             <div class="col-md-6">
                 <h1 class="text-center mb-4">Login</h1>
                 {% if messages %}
-                    <div class="alert alert-info">
-                        <ul class="messages list-unstyled">
-                            {% for message in messages %}
-                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                    <ul class="messages list-unstyled">
+                        {% for message in messages %}
+                            <li class="alert
+                                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success
+                                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger
+                                {% else %}alert-info
+                                {% endif %}">
+                                {{ message }}
+                            </li>
+                        {% endfor %}
+                    </ul>
                 {% endif %}
                 <div class="card">
                     <div class="card-body">
