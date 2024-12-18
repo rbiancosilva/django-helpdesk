@@ -4,6 +4,7 @@ from .models import LoginForm, RegisterForm
 from .utils import register_check_form, login_check_form 
 from django.contrib import messages
 from django.contrib.auth import login, logout
+import pdb
 
 def index_authentication(request):
     if request.user.is_authenticated:
@@ -32,6 +33,7 @@ def register_authentication(request):
                 return render(request, 'login_authentication.html', {'form': LoginForm()})
             except Exception as e:
                 messages.error(request, f"{e}")
+                print(e)
                 return render(request, 'register_authentication.html', {'form': RegisterForm()})
         
         messages.error(request, "Invalid form")
