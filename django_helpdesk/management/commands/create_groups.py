@@ -6,8 +6,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         groups_permissions = {
-            'operator': ['add_ticket', 'change_ticket', 'change_article', ],  # Example permissions
-            'user': ['view_ticket']  # Example permissions
+            'operator': ['view_ticket', 'change_ticket', 'change_article', 'change_profile'],  # Example permissions
+            'user': ['view_ticket', 'add_ticket', 'change_ticket', 'change_profile']  # Example permissions
         }
 
         for group_name, perms in groups_permissions.items():
