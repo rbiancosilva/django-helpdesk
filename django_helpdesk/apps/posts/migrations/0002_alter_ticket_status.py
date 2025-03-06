@@ -6,12 +6,12 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tickets', '0001_initial'),
+        ('posts', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='ticket',
+            model_name='post',
             name='status',
             field=models.TextField(choices=[('new', 'New'), ('inprogress', 'In progress'), ('closed', 'Closed')], max_length=30),
         ),

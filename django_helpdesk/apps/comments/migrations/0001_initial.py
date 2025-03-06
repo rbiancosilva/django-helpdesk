@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('tickets', '0001_initial'),
+        ('posts', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('user_name', models.TextField(max_length=120)),
                 ('content', models.TextField(max_length=1200)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('ticket', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tickets.ticket')),
+                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='posts.post')),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
             ],
         ),

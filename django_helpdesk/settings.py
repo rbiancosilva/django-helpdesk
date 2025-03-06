@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     #Django Helpdesk apps
     'django_helpdesk',
     'django_helpdesk.apps.authentication',
-    'django_helpdesk.apps.tickets',
+    'django_helpdesk.apps.posts',
     'django_helpdesk.apps.notifications',
     'django_helpdesk.apps.knowledge_base',
     'django_helpdesk.apps.user_profile',

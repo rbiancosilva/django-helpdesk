@@ -48,7 +48,7 @@
             <nav>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index_tickets' %}"><i class="bi bi-house"></i> Home</a>
+                        <a class="nav-link" href="{% url 'index_posts' %}"><i class="bi bi-house"></i> Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'details_user_profile' user.id %}"><i class="bi bi-person"></i> Profile</a>
@@ -64,12 +64,12 @@
                     </li>
                     {% if user.profile.role == "user" %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'new_tickets' %}"><i class="bi bi-plus-circle"></i> New Ticket</a>
+                        <a class="nav-link" href="{% url 'new_posts' %}"><i class="bi bi-plus-circle"></i> New Post</a>
                     </li>
                     {% endif %}
                     {% if user.profile.role == "operator" %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'all_tickets' %}"><i class="bi bi-list-check"></i> All Tickets</a>
+                        <a class="nav-link" href="{% url 'all_posts' %}"><i class="bi bi-list-check"></i> All Posts</a>
                     </li>
                     {% endif %}
                     <li class="nav-item">

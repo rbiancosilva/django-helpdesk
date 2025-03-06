@@ -8,13 +8,13 @@ import pdb
 
 def index_authentication(request):
     if request.user.is_authenticated:
-        return redirect(reverse('index_tickets'))
+        return redirect(reverse('index_posts'))
 
     return render(request, 'login_authentication.html', {'form': LoginForm()})
 
 def register_authentication(request):
     if request.user.is_authenticated:
-        return redirect(reverse('index_tickets'))
+        return redirect(reverse('index_posts'))
 
     if request.method == 'POST':
         
@@ -43,7 +43,7 @@ def register_authentication(request):
 
 def login_authentication(request):
     if request.user.is_authenticated:
-        return redirect(reverse('index_tickets'))
+        return redirect(reverse('index_posts'))
 
     if request.method == 'POST':
 
@@ -56,7 +56,7 @@ def login_authentication(request):
             try:
                 user = login_check_form(email, password)
                 login(request, user)
-                return redirect(reverse('index_tickets'))
+                return redirect(reverse('index_posts'))
             except Exception as e:
                 messages.error(request, f"{e}")
                 return render(request, 'login_authentication.html', {'form': LoginForm()})

@@ -15,10 +15,10 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Ticket',
+            name='Post',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('attachment', models.ImageField(blank=True, null=True, upload_to='media/tickets_attachments')),
+                ('attachment', models.ImageField(blank=True, null=True, upload_to='media/posts_attachments')),
                 ('content', models.TextField(max_length=1200)),
                 ('title', models.TextField(max_length=60)),
                 ('user_name', models.TextField(max_length=60)),
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('responsible', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='responsible', to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'permissions': [('status_ticket', 'Changes ticket status')],
+                'permissions': [('status_post', 'Changes post status')],
             },
         ),
     ]
