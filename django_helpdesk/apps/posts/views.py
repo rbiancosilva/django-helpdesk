@@ -61,13 +61,8 @@ class PostListView(LoginRequiredMixin, ListView):
     template_name = "index_posts.html"
 
     def get_queryset(self):
-        user = self.request.user
-        if user.profile.role == "user":    
-            queryset = Post.objects.filter(created_by=user)
-            return queryset
-        
-        queryset = Post.objects.filter(responsible=user)
-        return queryset
+        return Post.objects.all().order_by('-created_at')
+
     
 class AllPostListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Post
