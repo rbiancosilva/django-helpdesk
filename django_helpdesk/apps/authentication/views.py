@@ -23,7 +23,7 @@ def register_authentication(request):
         if form.is_valid():
             username = form.cleaned_data['username']  
             email = form.cleaned_data['email']
-            role = form.cleaned_data['role']
+            role = 'user'
             password_try = form.cleaned_data['password']
             password_retry = form.cleaned_data['password_confirmation']   
 

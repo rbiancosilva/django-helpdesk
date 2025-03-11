@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 
 @login_required(login_url='login_authentication')
-@permission_required('knowledge_base.change_article', raise_exception=True)
 def new_article_knowledge_base(request):
     if request.method == 'POST':
         

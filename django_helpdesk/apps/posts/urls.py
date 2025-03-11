@@ -9,6 +9,7 @@ urlpatterns = [
     path('details/<int:pk>/', PostDetailView.as_view(), name='detail_posts'), #ON CLICK  
     path('new/', views.new_posts, name='new_posts'), #sidebar 
     path('details/<int:pk>/change/', PostUpdateView.as_view(), name='change_posts'),
-    path('all', AllPostListView.as_view(), name='all_posts') #SIDEBAR
+    path('all', AllPostListView.as_view(), name='all_posts'), #SIDEBAR
+    path('like/<int:post_id>/', views.like_post, name='like_post'), 
     #Add a form to change the operator of a post
 ]

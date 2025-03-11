@@ -16,7 +16,7 @@
                     <li class="list-group-item">
                         <h5>{{ post.title }}</h5>
                         <p>{{ post.content }}</p>
-                        <small>Assigned on: {{ post.created_at }} | Status: {{ post.status }}</small>
+                        <small>Created on: {{ post.created_at }} | Status: {{ post.status }}</small>
                         <br>
                         <a style="margin-top: 5px" href="{% url 'detail_posts' post.id %}" class="btn btn-success btn-sm">View Details</a> <!-- Link to the post detail page -->
                     </li>

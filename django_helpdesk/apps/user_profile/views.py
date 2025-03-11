@@ -18,7 +18,7 @@ class ProfileListView(LoginRequiredMixin, ListView):
     context_object_name = "profiles"
     template_name = 'all_user_profile.html'
 
-class ProfileUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = Profile
 
     fields = [
@@ -31,7 +31,6 @@ class ProfileUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
     ]
     
     template_name = 'change_user_profile.html'
-    permission_required = 'user_profile.change_profile'
 
     def get_object(self, queryset=None):
         profile = super().get_object(queryset)

@@ -1,6 +1,6 @@
 from django.db.models.query import QuerySet
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django_helpdesk.apps.posts.models import Post
@@ -10,7 +10,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from .models import Post
+from .models import Post, LikePost
 from django.urls import reverse_lazy
 from django.core.exceptions import PermissionDenied
 from django_helpdesk.apps.comments.views import CommentForm
@@ -18,7 +18,6 @@ from django_helpdesk.apps.notifications.models import Notification
 
 
 @login_required(login_url='login_authentication')
-@permission_required('posts.add_post', raise_exception=True)
 def new_posts(request):
     if request.method == 'POST':
         
@@ -64,7 +63,7 @@ class PostListView(LoginRequiredMixin, ListView):
         return Post.objects.all().order_by('-created_at')
 
     
-class AllPostListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class AllPostListView(LoginRequiredMixin, ListView):
     model = Post
     context_object_name = "posts"
     template_name = "index_posts.html"
@@ -72,11 +71,27 @@ class AllPostListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = 'All posts'
+        context['title'] = 'Your posts'
 
         return context
+    
+    def get_queryset(self):
+        return Post.objects.filter(created_by=self.request.user).order_by('-created_at')
 
+@login_required(login_url='login_authentication')
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    like, created = LikePost.objects.get_or_create(user=request.user, post=post)
 
+    if not created:
+        # If like already exists, remove it (unlike)
+        like.delete()
+        liked = False
+    else:
+        liked = True
+
+    # Return a JSON response for AJAX
+    return JsonResponse({"liked": liked, "likes_count": post.likepost_set.count()})
 
 class PostDetailView(LoginRequiredMixin, DetailView, FormMixin):
     model = Post
@@ -103,7 +118,7 @@ class PostForm(forms.Form):
     #responsible = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='operator'), widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Responsible'}))
 
 
-class PostUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
 
     fields = [

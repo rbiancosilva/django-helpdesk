@@ -62,16 +62,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'index_notifications' %}"><i class="bi bi-bell"></i> Notifications</a>
                     </li>
-                    {% if user.profile.role == "user" %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'new_posts' %}"><i class="bi bi-plus-circle"></i> New Post</a>
                     </li>
-                    {% endif %}
-                    {% if user.profile.role == "operator" %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'all_posts' %}"><i class="bi bi-list-check"></i> All Posts</a>
+                        <a class="nav-link" href="{% url 'all_posts' %}"><i class="bi bi-list-check"></i> Your Posts</a>
                     </li>
-                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout_authentication' %}"><i class="bi bi-box-arrow-right"></i> Logout</a>
                     </li>

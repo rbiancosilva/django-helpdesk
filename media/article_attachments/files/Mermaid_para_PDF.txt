@@ -1,0 +1,5 @@
+Como baixar um diagrama mermaid em PDF
+
+1. Modelar o diagrama no site mermaid.live
+2. Copiar o modelo para o site app.diagrams.net
+3. Exportar como imagem em PDF
